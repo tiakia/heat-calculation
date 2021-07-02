@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>热量计算器</title>
+</head>
+<style>
+    .main {
+        background-color: beige;
+        text-align: center;
+    }
+
+    .header-h1 {
+        text-align: center;
+        font-size: 30px;
+    }
+
+    .result {
+        font-size: 36px;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .footer {
+        font-size: 12px;
+        margin-top: 10vh;
+    }
+
+    .button {
+        padding: 10px 28%;
+        color: #ffffff;
+        background-color: #409EFF;
+        font-size: 20px;
+        border-radius: 5px;
+        width: 80%;
+    }
+
+    input {
+        width: 20%;
+    }
+
+    input[type='radio'] {
+        width: 26px;
+        height: 26px;
+    }
+</style>
+<body class="main">
+<section>
+    <h1 class="header-h1">
+        嘿 你好
+    </h1>
+    <section>
+        <form name="Form">
+            <p>年龄: <input type="number" name="age" /></p>
+            <p>身高（cm）: <input type="number" name="height" /></p>
+            <p>体重（kg）: <input type="number" name="weight" /></p>
+            <p>
+                日常活动劳累度（包含工作及家务）:
+                <br>
+                <input class="neat" type="radio" checked="checked" name="NEAT" value="250" />活动量小，上班久坐
+                <br>
+                <input class="neat" type="radio" name="NEAT" value="350" />活动量尚可，时长走动
+                <br>
+                <input class="neat" type="radio" name="NEAT" value="500"/>活动量较大，体力劳动者
+            </p>
+            <p>
+                日常是否进行体育锻炼:
+                <br>
+                <input class="sport" type="radio" checked="checked" name="SPORT" value="a" />从不锻炼
+                <br>
+                <input class="sport" type="radio" name="SPORT" value="b" />低强度锻炼
+                <br>
+                <input class="sport" type="radio" name="SPORT" value="c"/>锻炼强度和时间适中
+                 <br>
+                <input class="sport" type="radio" name="SPORT" value="d"/>高强度长时间锻炼（高水平锻炼）
+            </p>
+            <input class="button" type="button" value="确认啦" onclick="mySubmit()">
+        </form>
+        <div id="result" class="result"></div>
+        </div>
+        <footer class="footer">
+            <div>
+                计算公式为：BMR = (hight * 4.8) + (weight * 13.4) - (age * 5.677) + 88.36;
+                BMR = BMR * 1.1;
+                TDEE = BMR + NEAT(0,200,300,400)
+            </div>
+        </footer>
+    </section>
+</section>
+<script>
+    function mySubmit() {
+        let age = Form.age.value || 0;
+        let height = Form.height.value || 0;
+        let weight = Form.weight.value || 0;
+        let NEAT = Number(Form.NEAT.value) || 0;
+        let SPORT = Form.SPORT.value;
+        let SPORTValue = 0;
+
+        if(SPORT === 'b') {
+            SPORTValue = 200
+        }
+        else if (SPORT === 'c') {
+            SPORTValue = 300
+        }
+        else if (SPORT === 'd') {
+            SPORTValue = 400
+        }
+
+        if(Form.age.value && Form.height.value && Form.weight.value && Form.NEAT.value && Form.SPORT.value) {
+            let BMR = (height * 4.8) + (weight * 13.4) - (age * 5.677) + 88.36;
+            BMR *= 1.1;
+            BMR += NEAT;
+            let TDEE = BMR + SPORTValue;
+            document.getElementById('result').innerText = `身体一天大概消耗的卡路里为${TDEE}～`
+            console.log(NEAT)
+            console.log(SPORTValue)
+        } else {
+            document.getElementById('result').innerText = "请输入完整数据哦"
+        }
+    }
+</script>
+</body>
+</html>
